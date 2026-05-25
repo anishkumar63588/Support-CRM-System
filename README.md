@@ -1,6 +1,6 @@
 # Support CRM System
 
-A full-stack customer support ticketing CRM built with FastAPI, SQLite, and a responsive HTML/CSS/JavaScript frontend.
+A full-stack customer support ticketing CRM built with FastAPI, SQLite, and responsive server-rendered HTML/CSS pages.
 
 ## Deployed Application
 
@@ -19,7 +19,7 @@ Live URL: https://web-production-0c2f8.up.railway.app/
 
 - Backend: Python, FastAPI
 - Database: SQLite with SQLAlchemy
-- Frontend: HTML, CSS, vanilla JavaScript
+- Frontend: Server-rendered HTML with CSS
 - Deployment target: Railway
 
 ## Local Setup
@@ -104,5 +104,6 @@ The SQLite database is created automatically as `support_crm.db`.
 - `.env.example`
 - `.gitignore`
 - FastAPI backend in `app/`
-- Frontend static files in `app/static/`
+- Frontend templates in `app/templates/`
+- Static CSS in `app/static/`
 - Railway deployment configuration

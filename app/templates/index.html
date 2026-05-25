@@ -21,7 +21,7 @@
             <h2>Create Ticket</h2>
           </div>
           <div class="panel-body">
-            <form id="ticket-form" class="form-stack">
+            <form action="/tickets" method="post" class="form-stack">
               <label>
                 Customer name
                 <input name="customer_name" autocomplete="name" required>
@@ -39,7 +39,9 @@
                 <textarea name="description" required></textarea>
               </label>
               <button class="button" type="submit">Create ticket</button>
-              <div id="form-notice" class="notice"></div>
+              {% if created %}
+                <div class="notice show success">Created {{ created }}.</div>
+              {% endif %}
             </form>
           </div>
         </aside>
@@ -48,16 +50,17 @@
           <div class="panel-header">
             <h2>Tickets</h2>
           </div>
-          <div class="toolbar">
-            <input id="search" type="search" placeholder="Search name, ID, email, subject, or description">
-            <select id="status">
-              <option value="">All statuses</option>
-              <option value="Open">Open</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Closed">Closed</option>
+          <form class="toolbar" method="get" action="/">
+            <input name="search" type="search" value="{{ search }}" placeholder="Search name, ID, email, subject, or description">
+            <select name="status" onchange="this.form.submit()">
+              <option value="" {% if not selected_status %}selected{% endif %}>All statuses</option>
+              <option value="Open" {% if selected_status == "Open" %}selected{% endif %}>Open</option>
+              <option value="In Progress" {% if selected_status == "In Progress" %}selected{% endif %}>In Progress</option>
+              <option value="Closed" {% if selected_status == "Closed" %}selected{% endif %}>Closed</option>
             </select>
-          </div>
-          <div class="ticket-list" id="ticket-list">
+            <button class="button secondary" type="submit">Search</button>
+          </form>
+          <div class="ticket-list">
             <div class="ticket-row header">
               <span>ID</span>
               <span>Name</span>
@@ -65,12 +68,22 @@
               <span>Status</span>
               <span class="date">Date</span>
             </div>
-            <div class="empty">Loading tickets...</div>
+            {% if tickets %}
+              {% for ticket in tickets %}
+                <a class="ticket-row" href="/tickets/{{ ticket.ticket_id }}">
+                  <span class="ticket-id">{{ ticket.ticket_id }}</span>
+                  <span class="truncate">{{ ticket.customer_name }}</span>
+                  <span class="subject truncate">{{ ticket.subject }}</span>
+                  <span class="status {{ ticket.status|lower|replace(' ', '-') }}">{{ ticket.status }}</span>
+                  <span class="date muted">{{ ticket.created_at.strftime("%b %d, %Y, %I:%M %p") }}</span>
+                </a>
+              {% endfor %}
+            {% else %}
+              <div class="empty">No tickets found.</div>
+            {% endif %}
           </div>
         </section>
       </section>
     </main>
-
-    <script src="/static/main.js"></script>
   </body>
 </html>

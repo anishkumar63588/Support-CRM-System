@@ -149,7 +149,7 @@ textarea:focus {
 .toolbar {
   display: grid;
   gap: 12px;
-  grid-template-columns: 1fr 190px;
+  grid-template-columns: 1fr 190px 110px;
   padding: 16px 18px;
 }
 

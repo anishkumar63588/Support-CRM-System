@@ -3,15 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ticket Detail - Support CRM</title>
+    <title>{{ ticket.ticket_id }} - Support CRM</title>
     <link rel="stylesheet" href="/static/styles.css">
   </head>
   <body>
     <main class="shell">
       <header class="topbar">
         <div class="brand">
-          <h1 id="ticket-heading">Ticket Detail</h1>
-          <p id="ticket-subtitle">Review status, customer details, and team notes.</p>
+          <h1>{{ ticket.ticket_id }}</h1>
+          <p>{{ ticket.subject }}</p>
         </div>
         <a class="button secondary" href="/">Back to tickets</a>
       </header>
@@ -19,29 +19,29 @@
       <section class="detail-grid">
         <article class="panel">
           <div class="panel-header">
-            <h2 id="subject">Loading...</h2>
+            <h2>{{ ticket.subject }}</h2>
           </div>
           <div class="panel-body">
             <div class="meta">
               <div class="meta-item">
                 <span>Customer</span>
-                <strong id="customer-name"></strong>
+                <strong>{{ ticket.customer_name }}</strong>
               </div>
               <div class="meta-item">
                 <span>Email</span>
-                <strong id="customer-email"></strong>
+                <strong>{{ ticket.customer_email }}</strong>
               </div>
               <div class="meta-item">
                 <span>Status</span>
-                <strong id="current-status"></strong>
+                <strong><span class="status {{ ticket.status|lower|replace(' ', '-') }}">{{ ticket.status }}</span></strong>
               </div>
               <div class="meta-item">
                 <span>Created</span>
-                <strong id="created-at"></strong>
+                <strong>{{ ticket.created_at.strftime("%b %d, %Y, %I:%M %p") }}</strong>
               </div>
             </div>
             <h3>Description</h3>
-            <p class="description" id="description"></p>
+            <p class="description">{{ ticket.description }}</p>
           </div>
         </article>
 
@@ -50,13 +50,13 @@
             <h3>Update Ticket</h3>
           </div>
           <div class="panel-body">
-            <form id="update-form" class="form-stack">
+            <form action="/tickets/{{ ticket.ticket_id }}" method="post" class="form-stack">
               <label>
                 Status
-                <select name="status" id="status">
-                  <option value="Open">Open</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Closed">Closed</option>
+                <select name="status">
+                  <option value="Open" {% if ticket.status == "Open" %}selected{% endif %}>Open</option>
+                  <option value="In Progress" {% if ticket.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                  <option value="Closed" {% if ticket.status == "Closed" %}selected{% endif %}>Closed</option>
                 </select>
               </label>
               <label>
@@ -64,7 +64,9 @@
                 <textarea name="notes" placeholder="Add an internal note"></textarea>
               </label>
               <button class="button" type="submit">Save update</button>
-              <div id="update-notice" class="notice"></div>
+              {% if updated %}
+                <div class="notice show success">Ticket updated.</div>
+              {% endif %}
             </form>
           </div>
         </aside>
@@ -75,11 +77,20 @@
           <h3>Notes</h3>
         </div>
         <div class="panel-body">
-          <div class="notes" id="notes"></div>
+          <div class="notes">
+            {% if notes %}
+              {% for note in notes %}
+                <div class="note">
+                  <p>{{ note.note_text }}</p>
+                  <small class="muted">{{ note.created_at.strftime("%b %d, %Y, %I:%M %p") }}</small>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p class="muted">No notes yet.</p>
+            {% endif %}
+          </div>
         </div>
       </section>
     </main>
-
-    <script src="/static/detail.js"></script>
   </body>
 </html>
