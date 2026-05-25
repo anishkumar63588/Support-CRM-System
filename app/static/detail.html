@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ticket Detail - Support CRM</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1 id="ticket-heading">Ticket Detail</h1>
+          <p id="ticket-subtitle">Review status, customer details, and team notes.</p>
+        </div>
+        <a class="button secondary" href="/">Back to tickets</a>
+      </header>
+
+      <section class="detail-grid">
+        <article class="panel">
+          <div class="panel-header">
+            <h2 id="subject">Loading...</h2>
+          </div>
+          <div class="panel-body">
+            <div class="meta">
+              <div class="meta-item">
+                <span>Customer</span>
+                <strong id="customer-name"></strong>
+              </div>
+              <div class="meta-item">
+                <span>Email</span>
+                <strong id="customer-email"></strong>
+              </div>
+              <div class="meta-item">
+                <span>Status</span>
+                <strong id="current-status"></strong>
+              </div>
+              <div class="meta-item">
+                <span>Created</span>
+                <strong id="created-at"></strong>
+              </div>
+            </div>
+            <h3>Description</h3>
+            <p class="description" id="description"></p>
+          </div>
+        </article>
+
+        <aside class="panel">
+          <div class="panel-header">
+            <h3>Update Ticket</h3>
+          </div>
+          <div class="panel-body">
+            <form id="update-form" class="form-stack">
+              <label>
+                Status
+                <select name="status" id="status">
+                  <option value="Open">Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Closed">Closed</option>
+                </select>
+              </label>
+              <label>
+                Note
+                <textarea name="notes" placeholder="Add an internal note"></textarea>
+              </label>
+              <button class="button" type="submit">Save update</button>
+              <div id="update-notice" class="notice"></div>
+            </form>
+          </div>
+        </aside>
+      </section>
+
+      <section class="panel" style="margin-top: 18px;">
+        <div class="panel-header">
+          <h3>Notes</h3>
+        </div>
+        <div class="panel-body">
+          <div class="notes" id="notes"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/detail.js"></script>
+  </body>
+</html>

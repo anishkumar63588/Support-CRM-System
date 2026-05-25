@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Support CRM</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <h1>Support CRM</h1>
+          <p>Track customer tickets, status, and team notes.</p>
+        </div>
+      </header>
+
+      <section class="grid">
+        <aside class="panel">
+          <div class="panel-header">
+            <h2>Create Ticket</h2>
+          </div>
+          <div class="panel-body">
+            <form id="ticket-form" class="form-stack">
+              <label>
+                Customer name
+                <input name="customer_name" autocomplete="name" required>
+              </label>
+              <label>
+                Customer email
+                <input name="customer_email" type="email" autocomplete="email" required>
+              </label>
+              <label>
+                Issue title
+                <input name="subject" required>
+              </label>
+              <label>
+                Description
+                <textarea name="description" required></textarea>
+              </label>
+              <button class="button" type="submit">Create ticket</button>
+              <div id="form-notice" class="notice"></div>
+            </form>
+          </div>
+        </aside>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Tickets</h2>
+          </div>
+          <div class="toolbar">
+            <input id="search" type="search" placeholder="Search name, ID, email, subject, or description">
+            <select id="status">
+              <option value="">All statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <div class="ticket-list" id="ticket-list">
+            <div class="ticket-row header">
+              <span>ID</span>
+              <span>Name</span>
+              <span class="subject">Title</span>
+              <span>Status</span>
+              <span class="date">Date</span>
+            </div>
+            <div class="empty">Loading tickets...</div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/main.js"></script>
+  </body>
+</html>
